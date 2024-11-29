@@ -1,0 +1,16 @@
+﻿@model ClienteDto
+<form asp-action="Create">
+    <div>
+        <label>Nome:</label>
+        <input type="text" asp-for="Nome" required />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" asp-for="Email" required />
+    </div>
+    <div>
+        <label>Logotipo:</label>
+        <input type="file" asp-for="Logotipo" />
+    </div>
+    <button type="submit">Salvar</button>
+</form>
