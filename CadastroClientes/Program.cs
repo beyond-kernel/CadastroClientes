@@ -2,6 +2,7 @@ using CadastroClientes.Repositories;
 using CadastroClientes.Services;
 using System.Data.SqlClient;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,7 +16,23 @@ builder.Services.AddScoped<CadastroClientes.Repositories.IClienteRepository, Cli
 
 builder.Services.AddScoped<ClienteService>();
 
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "SeuIssuer", // Configurar o issuer válido
+            ValidAudience = "SuaAudience", // Configurar a audiência válida
+            IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                System.Text.Encoding.UTF8.GetBytes("SuaChaveSecreta")) // Chave secreta para validação do token
+        };
+    });
 
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
