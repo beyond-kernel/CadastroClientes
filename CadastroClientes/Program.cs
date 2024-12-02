@@ -3,6 +3,7 @@ using CadastroClientes.Services;
 using System.Data.SqlClient;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,7 +13,7 @@ builder.Services.AddRazorPages();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddTransient(_ => new SqlConnection(connectionString));
 
-builder.Services.AddScoped<CadastroClientes.Repositories.IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 builder.Services.AddScoped<ClienteService>();
 
